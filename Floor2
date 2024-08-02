@@ -121,15 +121,30 @@ interface Vlan200
 ip forward-protocol nd
 
 ! HTTP server configuration
-ip http server
-ip http secure-server
+no ip http server
+no ip http secure-server
 
-! SSH encryption algorithms (Added)
+! SSH encryption algorithms
 ip ssh server algorithm encryption aes128-ctr aes192-ctr aes256-ctr
 ip ssh client algorithm encryption aes128-ctr aes192-ctr aes256-ctr
 
 ! Control plane configuration
 control-plane
+
+! Port security for IT VLAN ports
+interface GigabitEthernet2/1
+ switchport port-security
+ switchport port-security maximum 1
+ switchport port-security violation shutdown
+
+interface GigabitEthernet2/2
+ switchport port-security
+ switchport port-security maximum 1
+ switchport port-security violation shutdown
+
+! Disable unused ports
+interface GigabitEthernet2/3
+ shutdown
 
 ! Line configuration
 line con 0
@@ -143,11 +158,11 @@ line aux 0
 line vty 0 4
  password cisco
  login
- transport input telnet
+ transport input ssh
 
 line vty 5 15
  password cisco
  login
- transport input telnet
+ transport input ssh
 
 end
