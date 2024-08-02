@@ -426,8 +426,8 @@ ip http server
 ip http secure-server
 
 ! Static routes
-ip route 0.0.0.0 0.0.0.0 10.150.127.2 5
-ip route 0.0.0.0 0.0.0.0 10.150.127.1 10
+ip route 0.0.0.0 0.0.0.0 10.150.127.17 5
+ip route 0.0.0.0 0.0.0.0 10.150.127.9 10
 
 ! SSH encryption algorithms
 ip ssh server algorithm encryption aes128-ctr aes192-ctr aes256-ctr
@@ -487,12 +487,6 @@ interface Vlan990
 interface Vlan999
  no shutdown
 
-! Prevent unauthorized switches from automatically forming trunk links
-! Prevent access ports from forming trunk links
-! Prevent clients from receiving addressing from unauthorized DHCP servers
-! Prevent the use of unauthorized DHCP servers
-! Secure trunk links to only allow necessary VLAN traffic
-! Version2 configurations
 
 ! Apply ACLs for visitor networks
 ip access-list extended Visitor_DataCenter_Block
