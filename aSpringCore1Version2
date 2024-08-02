@@ -61,6 +61,11 @@ vlan 999
 vlan 888
  name Closed
 
+!Enable DHCP Snooping globally
+ip dhcp snooping
+!Enable DHCP Snooping for specific VLANs
+ip dhcp snooping vlan 1-4094
+
 ! Port-channel configuration
 interface Port-channel1
  switchport trunk allowed vlan 720,990,999
