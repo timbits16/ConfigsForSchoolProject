@@ -81,7 +81,9 @@ router ospf 15
  priority 100
  auto-cost reference-bandwidth 1000
  passive-interface GigabitEthernet0/3
- network 10.150.127.0 0.0.0.3 area 0
+ network 10.150.127.0 0.0.0.3 area 0    ! Advertise P2P network between SpringR2 and SpringR1
+ network 10.150.127.12 0.0.0.3 area 0   ! Advertise P2P network between SpringR2 and SpringCore1
+ network 10.150.127.16 0.0.0.3 area 0   ! Advertise P2P network between SpringR2 and SpringCore2
 
 ! NAT configuration
 ip nat pool ACCESS 192.168.255.63 192.168.255.63 netmask 255.255.255.0
@@ -97,18 +99,7 @@ logging source-interface GigabitEthernet0/2
 logging host 10.150.0.16
 
 ! Access list for NAT
-access-list 1 permit 10.150.0.0 0.0.0.3
-
-! SSH Configuration (Added)
-crypto key generate rsa modulus 1024
-ip ssh version 2
-line vty 0 4
- transport input ssh
- login local
-
-line vty 5 15
- transport input ssh
- login local
+access-list 1 permit 10.150.0.0 0.0.0.255
 
 ! Disable HTTP server
 no ip http server
@@ -122,6 +113,16 @@ line con 0
  login
 
 line aux 0
+
+line vty 0 4
+ password cisco
+ login
+ transport input telnet
+
+line vty 5 15
+ password cisco
+ login
+ transport input telnet
 
 no scheduler allocate
 
