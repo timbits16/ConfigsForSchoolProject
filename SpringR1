@@ -4,7 +4,8 @@ service timestamps log datetime msec
 no service password-encryption
 
 hostname SpringR1
-enable secret 9 $9$jfOHaTUBeeo807$JkHAIZHn8VrUOyqgk.uQONGS1ExbYUA.33HfXk0J5VE
+no logging console
+enable secret 9 $9$5d27mrgCU4fq6t$pRYDg7Z72yQMfETmlexGG25JiiuNPv5a5F8.0QZdDxs
 
 no aaa new-model
 no ip domain lookup
@@ -64,10 +65,10 @@ interface GigabitEthernet0/3
  ip address dhcp
  ip nat outside
  ip virtual-reassembly in
- ip ospf 15 area 0
  duplex auto
  speed auto
  media-type rj45
+ ip ospf 15 area 0
  no shutdown
 
 ! OSPFv3 configuration for IPv6
@@ -82,8 +83,9 @@ router ospf 15
  priority 127
  auto-cost reference-bandwidth 1000
  passive-interface GigabitEthernet0/3
- network 10.150.127.0 0.0.0.3 area 0
- default-information originate
+ network 10.150.127.0 0.0.0.3 area 0    ! Advertise P2P network between SpringR1 and SpringR2
+ network 10.150.127.4 0.0.0.3 area 0    ! Advertise P2P network between SpringR1 and SpringCore1
+ network 10.150.127.8 0.0.0.3 area 0    ! Advertise P2P network between SpringR1 and SpringCore2
 
 ! NAT configuration
 ip nat pool ACCESS 192.168.255.63 192.168.255.63 netmask 255.255.255.0
@@ -99,23 +101,11 @@ logging source-interface GigabitEthernet0/2
 logging host 10.150.0.16
 
 ! Access list for NAT
-access-list 1 permit 10.150.0.0 0.0.0.3
-access-list 1 deny any
+access-list 1 permit 10.150.0.0 0.0.0.255
 
 ! Disable HTTP server
 no ip http server
 no ip http secure-server
-
-! SSH Configuration (Added)
-crypto key generate rsa modulus 1024
-ip ssh version 2
-line vty 0 4
- transport input ssh
- login local
-
-line vty 5 15
- transport input ssh
- login local
 
 ! Line configuration
 line con 0
@@ -125,6 +115,16 @@ line con 0
  login
 
 line aux 0
+
+line vty 0 4
+ password cisco
+ login
+ transport input telnet
+
+line vty 5 15
+ password cisco
+ login
+ transport input telnet
 
 no scheduler allocate
 
