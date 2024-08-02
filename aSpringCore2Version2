@@ -400,7 +400,7 @@ router ospf 15
  passive-interface Vlan888
  passive-interface Vlan990
  passive-interface Vlan999
- network 10.150.0.0 0.0.0.255 area 0
+ network 10.150.0.0 0.0.0.3 area 0
  network 10.150.127.0 0.0.0.3 area 0
 
 interface GigabitEthernet1/1
