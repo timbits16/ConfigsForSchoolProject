@@ -4,7 +4,6 @@ service timestamps log datetime msec
 no service password-encryption
 
 hostname SpringR2
-no logging console
 enable secret 9 $9$5d27mrgCU4fq6t$pRYDg7Z72yQMfETmlexGG25JiiuNPv5a5F8.0QZdDxs
 
 no aaa new-model
