@@ -4,11 +4,15 @@ service timestamps log datetime msec
 no service password-encryption
 
 hostname SpringR1
-no logging console
-enable secret 9 $9$5d27mrgCU4fq6t$pRYDg7Z72yQMfETmlexGG25JiiuNPv5a5F8.0QZdDxs
+enable secret 9 $9$jfOHaTUBeeo807$JkHAIZHn8VrUOyqgk.uQONGS1ExbYUA.33HfXk0J5VE
 
 no aaa new-model
 no ip domain lookup
+
+! Configure SSH
+ip domain-name shmc.local
+crypto key generate rsa modulus 2048
+ip ssh version 2
 
 ip cef
 ipv6 unicast-routing
@@ -83,9 +87,8 @@ router ospf 15
  priority 127
  auto-cost reference-bandwidth 1000
  passive-interface GigabitEthernet0/3
- network 10.150.127.0 0.0.0.3 area 0    ! Advertise P2P network between SpringR1 and SpringR2
- network 10.150.127.4 0.0.0.3 area 0    ! Advertise P2P network between SpringR1 and SpringCore1
- network 10.150.127.8 0.0.0.3 area 0    ! Advertise P2P network between SpringR1 and SpringCore2
+ network 10.150.127.0 0.0.0.3 area 0
+ default-information originate
 
 ! NAT configuration
 ip nat pool ACCESS 192.168.255.63 192.168.255.63 netmask 255.255.255.0
@@ -101,11 +104,42 @@ logging source-interface GigabitEthernet0/2
 logging host 10.150.0.16
 
 ! Access list for NAT
-access-list 1 permit 10.150.0.0 0.0.0.255
+access-list 1 permit 10.150.0.0 0.0.0.3
 
 ! Disable HTTP server
 no ip http server
 no ip http secure-server
+
+! Banners
+banner exec ^C
+**************************************************************************
+* IOSv is strictly limited to use for evaluation, demonstration and IOS  *
+* education. IOSv is provided as-is and is not supported by Cisco's      *
+* Technical Advisory Center. Any use or disclosure, in whole or in part, *
+* of the IOSv Software or Documentation to any third party for any       *
+* purposes is expressly prohibited except as otherwise authorized by     *
+* Cisco in writing.                                                      *
+**************************************************************************^C
+
+banner incoming ^C
+**************************************************************************
+* IOSv is strictly limited to use for evaluation, demonstration and IOS  *
+* education. IOSv is provided as-is and is not supported by Cisco's      *
+* Technical Advisory Center. Any use or disclosure, in whole or in part, *
+* of the IOSv Software or Documentation to any third party for any       *
+* purposes is expressly prohibited except as otherwise authorized by     *
+* Cisco in writing.                                                      *
+**************************************************************************^C
+
+banner login ^C
+**************************************************************************
+* IOSv is strictly limited to use for evaluation, demonstration and IOS  *
+* education. IOSv is provided as-is and is not supported by Cisco's      *
+* Technical Advisory Center. Any use or disclosure, in whole or in part, *
+* of the IOSv Software or Documentation to any third party for any       *
+* purposes is expressly prohibited except as otherwise authorized by     *
+* Cisco in writing.                                                      *
+**************************************************************************^C
 
 ! Line configuration
 line con 0
@@ -119,12 +153,12 @@ line aux 0
 line vty 0 4
  password cisco
  login
- transport input telnet
+ transport input ssh
 
 line vty 5 15
  password cisco
  login
- transport input telnet
+ transport input ssh
 
 no scheduler allocate
 
