@@ -133,10 +133,10 @@ interface Vlan990
 ip forward-protocol nd
 
 ! HTTP server configuration
-ip http server
-ip http secure-server
+no ip http server
+no ip http secure-server
 
-! SSH encryption algorithms (Added)
+! SSH encryption algorithms
 ip ssh server algorithm encryption aes128-ctr aes192-ctr aes256-ctr
 ip ssh client algorithm encryption aes128-ctr aes192-ctr aes256-ctr
 
@@ -149,24 +149,21 @@ logging host 10.150.0.16
 ! Control plane configuration
 control-plane
 
-! Interface no shutdown commands
-interface Port-channel1
- no shutdown
-interface Port-channel2
- no shutdown
-interface Vlan990
- no shutdown
+! Port security for IT VLAN ports
+interface GigabitEthernet1/3
+ switchport port-security
+ switchport port-security maximum 1
+ switchport port-security violation shutdown
 
-interface GigabitEthernet1/2
- no shutdown
+! Disable unused ports
 interface GigabitEthernet2/0
- no shutdown
+ shutdown
 interface GigabitEthernet2/1
- no shutdown
+ shutdown
 interface GigabitEthernet2/2
- no shutdown
+ shutdown
 interface GigabitEthernet2/3
- no shutdown
+ shutdown
 
 ! Line configuration
 line con 0
@@ -180,11 +177,11 @@ line aux 0
 line vty 0 4
  password cisco
  login
- transport input telnet
+ transport input ssh
 
 line vty 5 15
  password cisco
  login
- transport input telnet
+ transport input ssh
 
 end
