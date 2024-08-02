@@ -121,7 +121,7 @@ interface GigabitEthernet1/2
  ip ospf 15 area 0
  negotiation auto
  ipv6 address FE80::4 link-local
- ipv6 address 2001:BBFC:88EF:FFFB::2/64
+ ipv6 address 2001:BBFC:88EF:FFFE::2/64
  ipv6 ospf 15 area 0
 
 interface GigabitEthernet1/3
@@ -407,6 +407,7 @@ interface GigabitEthernet1/3
  ip ospf network point-to-point
  ip ospf 15 area 0
 
+
 ! IP forward-protocol
 ip forward-protocol nd
 
@@ -415,17 +416,18 @@ ip http server
 ip http secure-server
 
 ! Static routes
-ip route 0.0.0.0 0.0.0.0 10.150.127.2 5
-ip route 0.0.0.0 0.0.0.0 10.150.127.1 10
+ip route 0.0.0.0 0.0.0.0 10.150.127.1 5
+ip route 0.0.0.0 0.0.0.0 10.150.127.2 10
 
-! SSH encryption algorithms (Added)
+! SSH encryption algorithms
 ip ssh server algorithm encryption aes128-ctr aes192-ctr aes256-ctr
 ip ssh client algorithm encryption aes128-ctr aes192-ctr aes256-ctr
 
 ! Logging configuration
-logging host 10.150.0.16
 logging trap debugging
-logging trap informational
+logging origin-id hostname
+logging source-interface Vlan720
+logging host 10.150.0.16
 
 ! Control plane configuration
 control-plane
