@@ -1,0 +1,159 @@
+SpringR1
+show ip ssh
+show run | include crypto key generate rsa
+show ip interface brief | include administratively down
+show run | include no ip http server
+show run | include no ip http secure-server
+show run | include no cdp run
+show run | include no lldp run
+show ip dhcp snooping
+show ip dhcp snooping binding
+show run | include ip dhcp snooping
+show interfaces trunk
+show run | include switchport trunk allowed vlan
+show run | include switchport trunk native vlan
+
+
+
+
+SpringR2
+show ip ssh
+show run | include crypto key generate rsa
+show ip interface brief | include administratively down
+show run | include no ip http server
+show run | include no ip http secure-server
+show run | include no cdp run
+show run | include no lldp run
+show ip dhcp snooping
+show ip dhcp snooping binding
+show run | include ip dhcp snooping
+show interfaces trunk
+show run | include switchport trunk allowed vlan
+show run | include switchport trunk native vlan
+
+
+
+
+SpringCore1
+show ip ssh
+show run | include crypto key generate rsa
+show ip interface brief | include administratively down
+show run | include no ip http server
+show run | include no ip http secure-server
+show run | include no cdp run
+show run | include no lldp run
+show ip dhcp snooping
+show ip dhcp snooping binding
+show run | include ip dhcp snooping
+show interfaces trunk
+show run | include switchport trunk allowed vlan
+show run | include switchport trunk native vlan
+show access-lists Visitor_DataCenter_Block
+show run | include ip access-group DVisitor_DataCenter_Block
+show access-lists Visitor_ISP_Allow
+show run | include ip access-group Visitor_ISP_Allow
+show access-lists IT_Network_Devices_Allow
+show run | include ip access-group IT_Network_Devices_Allow
+
+
+
+
+
+
+SpringCore2
+show ip ssh
+show run | include crypto key generate rsa
+show ip interface brief | include administratively down
+show run | include no ip http server
+show run | include no ip http secure-server
+show run | include no cdp run
+show run | include no lldp run
+show ip dhcp snooping
+show ip dhcp snooping binding
+show run | include ip dhcp snooping
+show interfaces trunk
+show run | include switchport trunk allowed vlan
+show run | include switchport trunk native vlan
+show access-lists Visitor_DataCenter_Block
+show run | include ip access-group DVisitor_DataCenter_Block
+show access-lists Visitor_ISP_Allow
+show run | include ip access-group Visitor_ISP_Allow
+show access-lists IT_Network_Devices_Allow
+show run | include ip access-group IT_Network_Devices_Allow
+
+
+
+
+
+Floor1
+show ip ssh
+show run | include crypto key generate rsa
+show port-security
+show run | include switchport port-security
+show ip interface brief | include administratively down
+show run | include no ip http server
+show run | include no ip http secure-server
+show run | include no cdp run
+show run | include no lldp run
+show run | include switchport nonegotiate
+show run | include switchport mode access
+show ip dhcp snooping
+show ip dhcp snooping binding
+show run | include ip dhcp snooping
+
+
+
+
+Floor2
+show ip ssh
+show run | include crypto key generate rsa
+show port-security
+show run | include switchport port-security
+show ip interface brief | include administratively down
+show run | include no ip http server
+show run | include no ip http secure-server
+show run | include no cdp run
+show run | include no lldp run
+show run | include switchport nonegotiate
+show run | include switchport mode access
+show ip dhcp snooping
+show ip dhcp snooping binding
+show run | include ip dhcp snooping
+
+
+
+Floor3
+show ip ssh
+show run | include crypto key generate rsa
+show port-security
+show run | include switchport port-security
+show ip interface brief | include administratively down
+show run | include no ip http server
+show run | include no ip http secure-server
+show run | include no cdp run
+show run | include no lldp run
+show run | include switchport nonegotiate
+show run | include switchport mode access
+show ip dhcp snooping
+show ip dhcp snooping binding
+show run | include ip dhcp snooping
+
+
+
+DataCenter
+show ip ssh
+show run | include crypto key generate rsa
+show port-security
+show run | include switchport port-security
+show ip interface brief | include administratively down
+show run | include no ip http server
+show run | include no ip http secure-server
+show run | include no cdp run
+show run | include no lldp run
+show run | include switchport nonegotiate
+show run | include switchport mode access
+show ip dhcp snooping
+show ip dhcp snooping binding
+show run | include ip dhcp snooping
+
+
