@@ -11,6 +11,7 @@ ip domain-name shmc.local
 ip cef
 ipv6 unicast-routing
 ipv6 cef
+ip routing
 
 ! Spanning Tree Protocol configuration
 spanning-tree mode rapid-pvst
@@ -281,6 +282,7 @@ interface Vlan215
 
 interface Vlan220
  ip address 10.150.60.2 255.255.255.0
+ ip access-group Visit270-IN in
  ip helper-address 10.150.0.12
  ip helper-address 10.150.0.13
  standby version 2
@@ -420,8 +422,8 @@ interface GigabitEthernet1/3
 ip forward-protocol nd
 
 ! HTTP server configuration
-no ip http server
-no ip http secure-server
+ip http server
+ip http secure-server
 
 ! Static routes
 ip route 0.0.0.0 0.0.0.0 10.150.127.1 5
