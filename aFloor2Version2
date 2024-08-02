@@ -44,6 +44,11 @@ vlan 720
 vlan 888
  name Closed
 
+!Enable DHCP Snooping globally
+ip dhcp snooping
+!Enable DHCP Snooping for specific VLANs
+ip dhcp snooping vlan 1-4094
+
 ! Interface configurations
 interface GigabitEthernet0/0
  switchport trunk allowed vlan 200,205,210,215,220,720,999
