@@ -407,17 +407,16 @@ interface GigabitEthernet1/3
  ip ospf network point-to-point
  ip ospf 15 area 0
 
-
 ! IP forward-protocol
 ip forward-protocol nd
 
 ! HTTP server configuration
-ip http server
-ip http secure-server
+no ip http server
+no ip http secure-server
 
 ! Static routes
-ip route 0.0.0.0 0.0.0.0 10.150.127.1 5
-ip route 0.0.0.0 0.0.0.0 10.150.127.2 10
+ip route 0.0.0.0 0.0.0.0 10.150.127.2 5
+ip route 0.0.0.0 0.0.0.0 10.150.127.1 10
 
 ! SSH encryption algorithms
 ip ssh server algorithm encryption aes128-ctr aes192-ctr aes256-ctr
@@ -490,11 +489,11 @@ line aux 0
 line vty 0 4
  password cisco
  login
- transport input telnet
+ transport input ssh
 
 line vty 5 15
  password cisco
  login
- transport input telnet
+ transport input ssh
 
 end
