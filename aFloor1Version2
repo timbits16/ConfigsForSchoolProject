@@ -158,10 +158,6 @@ interface GigabitEthernet2/1
  switchport port-security maximum 1
  switchport port-security violation shutdown
 
-! Disable unused ports
-interface range GigabitEthernet2/2, GigabitEthernet2/3
- shutdown
-
 ! Line configuration
 line con 0
  exec-timeout 0 0
