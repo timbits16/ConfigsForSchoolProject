@@ -1,4 +1,11 @@
+version 15.2
+service timestamps debug datetime msec
+service timestamps log datetime msec
+no service password-encryption
+service compress-config
+
 hostname DataCentre
+no logging console
 
 ! Enable secret for privileged access
 enable secret 5 $1$NPx/$jCydXaJJSTLgK9XxHJeF./
@@ -95,7 +102,12 @@ interface GigabitEthernet1/3
  switchport mode access
  switchport nonegotiate
  negotiation auto
+ ! Port security for IT VLAN ports
+ switchport port-security
+ switchport port-security maximum 1
+ switchport port-security violation shutdown
 
+! Disable unused ports
 interface GigabitEthernet2/0
  switchport access vlan 888
  switchport mode access
@@ -148,12 +160,6 @@ logging host 10.150.0.16
 
 ! Control plane configuration
 control-plane
-
-! Port security for IT VLAN ports
-interface GigabitEthernet1/3
- switchport port-security
- switchport port-security maximum 1
- switchport port-security violation shutdown
 
 ! Disable unused ports
 interface GigabitEthernet2/0
