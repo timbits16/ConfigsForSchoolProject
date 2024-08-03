@@ -1,48 +1,18 @@
-Configure SSH
-Devices: All (SpringR1, SpringR2, SpringCore1, SpringCore2, Acc1-Floor1, Acc-Floor2, Acc1-Floor3, DataCentre).
-show ip ssh
-show run | include ip domain-name
-show run | include crypto key generate rsa
+# On DHCP Server 1:
+subnet 10.150.0.0 netmask 255.255.255.0 {
+    range 10.150.0.10 10.150.0.100;
+    option routers 10.150.0.1;
+}
 
-2. Configure port security so only a single laptop can use each of the IT VLAN ports
-Devices: All Access Switches (Acc1-Floor1, Acc-Floor2, Acc1-Floor3, DataCentre)
-show port-security interface GigabitEthernetX/Y
-show run interface GigabitEthernetX/Y | include switchport port-security
+# On DHCP Server 2:
+subnet 10.150.0.0 netmask 255.255.255.0 {
+    range 10.150.0.101 10.150.0.200;
+    option routers 10.150.0.1;
+}
 
-3. Secure unused ports and disable unused services
-Devices: All (SpringR1, SpringR2, SpringCore1, SpringCore2, Acc1-Floor1, Acc-Floor2, Acc1-Floor3, DataCentre)
-show ip interface brief
-show run | include no ip http server
-show run | include no ip http secure-server
-show run | include no cdp run
-show run | include no lldp run
-4.
-Prevent unauthorized switches from automatically forming trunk links
-Devices: All Access Switches (Acc1-Floor1, Acc-Floor2, Acc1-Floor3, DataCentre)
-show run interface GigabitEthernetX/Y | include switchport nonegotiate
-show run interface GigabitEthernetX/Y | include switchport mode access
 
-5. Prevent access ports from forming trunk linksDevices: All Access Switches (Acc1-Floor1, Acc-Floor2, Acc1-Floor3, DataCentre)
-show run interface GigabitEthernetX/Y | include switchport nonegotiate
-show run interface GigabitEthernetX/Y | include switchport mode access
-6. Prevent clients from receiving addressing from unauthorized DHCP servers and Prevent the use of unauthorized DHCP servers
-Devices: All (SpringR1, SpringR2, SpringCore1, SpringCore2, Acc1-Floor1, Acc-Floor2, Acc1-Floor3, DataCentre)
-show ip dhcp snooping
-show ip dhcp snooping binding
-show run | include ip dhcp snooping
 
-8. Secure trunk links to only allow necessary VLAN traffic
-Devices: SpringCore1, SpringCore2, DataCentre, SpringR1, SpringR2
-show access-lists DENY_VISITOR_TO_DC
-show run interface Vlan220 | include ip access-group
-show run interface Vlan325 | include ip access-group
-
-10. Create an ACL to only allow DNS/HTTP/HTTPS from the visitor networks to the ISP (college network)
-Devices: SpringCore1, SpringCore2
-show access-lists VISITOR_TO_ISP
-show run interface GigabitEthernet0/3 | include ip access-group
-
-11. Create an ACL so that only clients on the IT VLANs can communicate with network devices
-Devices: SpringCore1, SpringCore2
-show access-lists IT_TO_DEVICES
-show run interface Vlan720 | include ip access-group
+ip dhcp snooping
+ip dhcp snooping vlan 1-4094
+interface GigabitEthernet1/0
+    ip dhcp snooping trust
