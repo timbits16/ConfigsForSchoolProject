@@ -1,0 +1,523 @@
+
+! Last configuration change at 06:23:08 UTC Fri Jul 12 2024
+!
+version 15.2
+service timestamps debug datetime msec
+service timestamps log datetime msec
+no service password-encryption
+service compress-config
+!
+hostname SpringCore1
+!
+boot-start-marker
+boot-end-marker
+!
+!
+no logging console
+enable secret 5 $1$hU24$iFaNa8es6ZhMABpHaxMd11
+!
+no aaa new-model
+!
+!
+!
+!
+!
+vtp mode transparent
+!
+!
+!
+no ip domain-lookup
+ip cef
+ipv6 unicast-routing
+ipv6 cef
+!
+!
+archive
+ path tftp://172.29.90.10/SpringCore1
+ write-memory
+ time-period 10080
+!
+spanning-tree mode rapid-pvst
+spanning-tree extend system-id
+spanning-tree vlan 111,155,165,170,175,180,185,220,235,250,265 priority 24576
+spanning-tree vlan 340,345,350,355,360,730,990 priority 28672
+!
+!
+vlan 111
+ name Native
+!
+vlan 155
+ name PharmaPlus
+!
+vlan 165
+ name DynaLabs
+!
+vlan 170
+ name Reception
+!
+vlan 175
+ name Security
+!
+vlan 180
+ name Facilities
+!
+vlan 185
+ name Visitor1
+!
+vlan 220
+ name Physicians
+!
+vlan 235
+ name ChildrensHealth
+!
+vlan 250
+ name CoolidgeLab
+!
+vlan 265
+ name MassageSpa
+!
+vlan 280
+ name Visitor2 
+!
+vlan 340
+ name Allergist
+!
+vlan 345
+ name Physiotherapy
+!
+vlan 350
+ name DentalOffice
+!
+vlan 355
+ name ENT
+!
+vlan 360
+ name Visitor3
+!
+vlan 730
+ name IT
+!
+vlan 990
+ name DataCenter
+!
+vlan 999
+ name Parking Lot
+!
+! 
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+interface Port-channel1
+ switchport trunk allowed vlan 111,730,990
+ switchport trunk encapsulation dot1q
+ switchport trunk native vlan 111
+ switchport mode trunk
+!
+interface GigabitEthernet0/0
+ switchport trunk allowed vlan 111,155,165,170,175,180,185,730,990
+ switchport trunk encapsulation dot1q
+ switchport trunk native vlan 111
+ switchport mode trunk
+ negotiation auto
+!
+interface GigabitEthernet0/1
+ switchport trunk allowed vlan 111,220,235,250,265,280,730,990
+ switchport trunk encapsulation dot1q
+ switchport trunk native vlan 111
+ switchport mode trunk
+ negotiation auto
+!
+interface GigabitEthernet0/2
+ switchport trunk allowed vlan 111,340,345,350,355,360,730,990
+ switchport trunk encapsulation dot1q
+ switchport trunk native vlan 111
+ switchport mode trunk
+ negotiation auto
+!
+interface GigabitEthernet0/3
+ switchport trunk allowed vlan 111,730,990
+ switchport trunk encapsulation dot1q
+ switchport trunk native vlan 111
+ switchport mode trunk
+ negotiation auto
+!
+interface GigabitEthernet1/0
+ switchport trunk allowed vlan 111,730,990
+ switchport trunk encapsulation dot1q
+ switchport trunk native vlan 111
+ switchport mode trunk
+ negotiation auto
+ channel-group 1 mode desirable
+!
+interface GigabitEthernet1/1
+ no switchport
+ ip address 172.29.127.13 255.255.255.252
+ ip ospf network point-to-point
+ ip ospf 65 area 0
+ negotiation auto
+ ipv6 address FE80::3 link-local
+ ipv6 address 2001:9CCB:FCB9:FFFC::1/64
+ ipv6 ospf 65 area 0
+!
+interface GigabitEthernet1/2
+ no switchport
+ ip address 172.29.127.17 255.255.255.252
+ ip ospf network point-to-point
+ ip ospf 65 area 0
+ negotiation auto
+ ipv6 address FE80::3 link-local
+ ipv6 address 2001:9CCB:FCB9:FFFB::1/64
+ ipv6 ospf 65 area 0
+!
+interface GigabitEthernet1/3
+ no switchport
+ ip address 172.29.127.10 255.255.255.252
+ ip ospf network point-to-point
+ ip ospf 65 area 0
+ negotiation auto
+ ipv6 address FE80::3 link-local
+ ipv6 address 2001:9CCB:FCB9:FFFD::2/64
+ ipv6 ospf 65 area 0
+!
+interface Vlan111
+ ip address 172.29.111.11 255.255.255.0
+ ip helper-address 172.29.90.12 
+ ip helper-address 172.29.90.13 
+ standby version 2
+ standby 111 ip 172.29.111.1
+ standby 111 priority 150
+ standby 111 preempt
+ ip ospf network point-to-point
+ ipv6 address FE80::3 link-local
+ ipv6 address 2001:9CCB:FCB9:111::1/64
+ ipv6 ospf 65 area 0
+!
+interface Vlan155
+ ip address 172.29.15.11 255.255.255.0
+ ip helper-address 172.29.90.12 
+ ip helper-address 172.29.90.13 
+ standby version 2
+ standby 155 ip 172.29.15.1
+ standby 155 priority 150
+ standby 155 preempt
+ ip ospf network point-to-point
+ ip ospf 65 area 0
+ ipv6 address FE80::3 link-local
+ ipv6 address 2001:9CCB:FCB9:155::1/64
+ ipv6 ospf 65 area 0
+!
+interface Vlan165
+ ip address 172.29.16.11 255.255.255.0
+ ip helper-address 172.29.90.12 
+ ip helper-address 172.29.90.13 
+ standby version 2
+ standby 165 ip 172.29.16.1
+ standby 165 priority 150
+ standby 165 preempt
+ ip ospf network point-to-point
+ ipv6 address FE80::3 link-local
+ ipv6 address 2001:9CCB:FCB9:165::1/64
+ ipv6 ospf 65 area 0
+!
+interface Vlan170
+ ip address 172.29.17.11 255.255.255.0
+ ip helper-address 172.29.90.12 
+ ip helper-address 172.29.90.13 
+ standby version 2
+ standby 170 ip 172.29.17.1
+ standby 170 priority 150
+ standby 170 preempt
+ ip ospf network point-to-point
+ ipv6 address FE80::3 link-local
+ ipv6 address 2001:9CCB:FCB9:170::1/64
+ ipv6 ospf 65 area 0
+!
+interface Vlan175
+ ip address 172.29.75.11 255.255.255.0
+ ip helper-address 172.29.90.12 
+ ip helper-address 172.29.90.13 
+ standby version 2
+ standby 175 ip 172.29.75.1
+ standby 175 priority 150
+ standby 175 preempt
+ ip ospf network point-to-point
+ ipv6 address FE80::3 link-local
+ ipv6 address 2001:9CCB:FCB9:175::1/64
+ ipv6 ospf 65 area 0
+!
+interface Vlan180
+ ip address 172.29.18.11 255.255.255.0
+ ip helper-address 172.29.90.12 
+ ip helper-address 172.29.90.13 
+ standby version 2
+ standby 180 ip 172.29.18.1
+ standby 180 priority 150
+ standby 180 preempt
+ ip ospf network point-to-point
+ ipv6 address FE80::3 link-local
+ ipv6 address 2001:9CCB:FCB9:180::1/64
+ ipv6 ospf 65 area 0
+!
+interface Vlan185
+ ip address 172.29.85.11 255.255.255.0
+ ip access-group Visit190-IN in
+ ip helper-address 172.29.90.12 
+ ip helper-address 172.29.90.13 
+ standby version 2
+ standby 185 ip 172.29.85.1
+ standby 185 priority 150
+ standby 185 preempt
+ ip ospf network point-to-point
+ ipv6 address FE80::3 link-local
+ ipv6 address 2001:9CCB:FCB9:185::1/64
+ ipv6 ospf 65 area 0
+!
+interface Vlan220
+ ip address 172.29.22.11 255.255.255.0
+ ip helper-address 172.29.90.12 
+ ip helper-address 172.29.90.13 
+ standby version 2
+ standby 220 ip 172.29.22.1
+ standby 220 priority 150
+ standby 220 preempt
+ ip ospf network point-to-point
+ ipv6 address FE80::3 link-local
+ ipv6 address 2001:9CCB:FCB9:220::1/64
+ ipv6 ospf 65 area 0
+!
+interface Vlan235
+ ip address 172.29.23.11 255.255.255.0
+ ip helper-address 172.29.90.12 
+ ip helper-address 172.29.90.13 
+ standby version 2
+ standby 235 ip 172.29.23.1
+ standby 235 priority 150
+ standby 235 preempt
+ ip ospf network point-to-point
+ ipv6 address FE80::3 link-local
+ ipv6 address 2001:9CCB:FCB9:235::1/64
+ ipv6 ospf 65 area 0
+!
+interface Vlan250
+ ip address 172.29.25.11 255.255.255.0
+ ip helper-address 172.29.90.12 
+ ip helper-address 172.29.90.13 
+ standby version 2
+ standby 250 ip 172.29.25.1
+ standby 250 priority 150
+ standby 250 preempt
+ ip ospf network point-to-point
+ ipv6 address FE80::3 link-local
+ ipv6 address 2001:9CCB:FCB9:250::1/64
+ ipv6 ospf 65 area 0
+!
+interface Vlan265
+ ip address 172.29.26.11 255.255.255.0
+ ip helper-address 172.29.90.12 
+ ip helper-address 172.29.90.13 
+ standby version 2
+ standby 265 ip 172.29.26.1
+ standby 265 priority 150
+ standby 265 preempt
+ ip ospf network point-to-point
+ ipv6 address FE80::3 link-local
+ ipv6 address 2001:9CCB:FCB9:265::1/64
+ ipv6 ospf 65 area 0
+!
+interface Vlan280
+ ip address 172.29.28.11 255.255.255.0
+ ip helper-address 172.29.90.12 
+ ip helper-address 172.29.90.13 
+ standby version 2
+ standby 280 ip 172.29.28.1
+ standby 280 priority 150
+ standby 280 preempt
+ ip ospf network point-to-point
+ ipv6 address FE80::3 link-local
+ ipv6 address 2001:9CCB:FCB9:280::1/64
+ ipv6 ospf 65 area 0
+!
+interface Vlan340
+ ip address 172.29.34.11 255.255.255.0
+ ip helper-address 172.29.90.12 
+ ip helper-address 172.29.90.13 
+ standby version 2
+ standby 340 ip 172.29.34.1
+ ip ospf network point-to-point
+ ipv6 address FE80::3 link-local
+ ipv6 address 2001:9CCB:FCB9:340::1/64
+ ipv6 ospf 65 area 0
+!
+interface Vlan345
+ ip address 172.29.45.11 255.255.255.0
+ ip helper-address 172.29.90.12 
+ ip helper-address 172.29.90.13 
+ standby version 2
+ standby 345 ip 172.29.45.1
+ ip ospf network point-to-point
+ ipv6 address FE80::3 link-local
+ ipv6 address 2001:9CCB:FCB9:345::1/64
+ ipv6 ospf 65 area 0
+!
+interface Vlan350
+ ip address 172.29.35.11 255.255.255.0
+ ip helper-address 172.29.90.12 
+ ip helper-address 172.29.90.13 
+ standby version 2
+ standby 350 ip 172.29.35.1
+ ip ospf network point-to-point
+ ipv6 address FE80::3 link-local
+ ipv6 address 2001:9CCB:FCB9:350::1/64
+ ipv6 ospf 65 area 0
+!
+interface Vlan355
+ ip address 172.29.55.11 255.255.255.0
+ ip helper-address 172.29.90.12 
+ ip helper-address 172.29.90.13 
+ standby version 2
+ standby 355 ip 172.29.55.1
+ ip ospf network point-to-point
+ ipv6 address FE80::3 link-local
+ ipv6 address 2001:9CCB:FCB9:355::1/64
+ ipv6 ospf 65 area 0
+!
+interface Vlan360
+ ip address 172.29.36.11 255.255.255.0
+ ip access-group Visit360-IN in
+ ip helper-address 172.29.90.12 
+ ip helper-address 172.29.90.13 
+ standby version 2
+ standby 360 ip 172.29.36.1
+ ip ospf network point-to-point
+ ipv6 address FE80::3 link-local
+ ipv6 address 2001:9CCB:FCB9:360::1/64
+ ipv6 ospf 65 area 0
+!
+interface Vlan730
+ ip address 172.29.73.11 255.255.255.0
+ ip helper-address 172.29.90.12 
+ ip helper-address 172.29.90.13 
+ standby version 2
+ standby 730 ip 172.29.73.1
+ ip ospf network point-to-point
+ ipv6 address FE80::3 link-local
+ ipv6 address 2001:9CCB:FCB9:730::1/64
+ ipv6 ospf 65 area 0
+!
+interface Vlan990
+ ip address 172.29.90.41 255.255.255.0
+ ip helper-address 172.29.90.12 
+ ip helper-address 172.29.90.13 
+ standby version 2
+ standby 990 ip 172.29.90.1
+ ip ospf network point-to-point
+ ipv6 address FE80::3 link-local
+ ipv6 address 2001:9CCB:FCB9:990::1/64
+ ipv6 ospf 65 area 0
+!
+router ospf 65
+ router-id 3.3.3.3
+ auto-cost reference-bandwidth 1000
+ passive-interface GigabitEthernet0/0
+ passive-interface GigabitEthernet0/1
+ passive-interface GigabitEthernet0/2
+ passive-interface GigabitEthernet0/3
+ passive-interface GigabitEthernet1/0
+ passive-interface Vlan111
+ passive-interface Vlan155
+ passive-interface Vlan165
+ passive-interface Vlan170
+ passive-interface Vlan175
+ passive-interface Vlan180
+ passive-interface Vlan185
+ passive-interface Vlan220
+ passive-interface Vlan235
+ passive-interface Vlan250
+ passive-interface Vlan265
+ passive-interface Vlan280
+ passive-interface Vlan340
+ passive-interface Vlan345
+ passive-interface Vlan350
+ passive-interface Vlan355
+ passive-interface Vlan360
+ passive-interface Vlan730
+ passive-interface Vlan990
+ network 172.29.0.0 0.0.255.255 area 0
+!
+ip forward-protocol nd
+!
+ip http server
+ip http secure-server
+!
+ip route 0.0.0.0 0.0.0.0 172.29.127.1 5
+ip route 0.0.0.0 0.0.0.0 172.29.127.2 10
+ip ssh server algorithm encryption aes128-ctr aes192-ctr aes256-ctr
+ip ssh client algorithm encryption aes128-ctr aes192-ctr aes256-ctr
+!
+!
+logging trap debugging
+logging origin-id hostname
+logging source-interface Vlan730
+logging host 172.29.90.10
+ipv6 router ospf 65
+!
+!
+!
+!
+!
+control-plane
+!
+banner exec C
+IOSv - Cisco Systems Confidential -
+
+Supplemental End User License Restrictions
+
+This IOSv software is provided AS-IS without warranty of any kind. Under no circumstances may this software be used separate from the Cisco Modeling Labs Software that this software was provided with, or deployed or used as part of a production environment.
+
+By using the software, you agree to abide by the terms and conditions of the Cisco End User License Agreement at http://www.cisco.com/go/eula. Unauthorized use or distribution of this software is expressly prohibited.
+
+banner incoming C
+IOSv - Cisco Systems Confidential -
+
+Supplemental End User License Restrictions
+
+This IOSv software is provided AS-IS without warranty of any kind. Under no circumstances may this software be used separate from the Cisco Modeling Labs Software that this software was provided with, or deployed or used as part of a production environment.
+
+By using the software, you agree to abide by the terms and conditions of the Cisco End User License Agreement at http://www.cisco.com/go/eula. Unauthorized use or distribution of this software is expressly prohibited.
+
+banner login C
+IOSv - Cisco Systems Confidential -
+
+Supplemental End User License Restrictions
+
+This IOSv software is provided AS-IS without warranty of any kind. Under no circumstances may this software be used separate from the Cisco Modeling Labs Software that this software was provided with, or deployed or used as part of a production environment.
+
+By using the software, you agree to abide by the terms and conditions of the Cisco End User License Agreement at http://www.cisco.com/go/eula. Unauthorized use or distribution of this software is expressly prohibited.
+
+!
+line con 0
+ exec-timeout 0 0
+ password cisco
+ logging synchronous
+ login
+line aux 0
+line vty 0 4
+ password cisco
+ login
+ transport input telnet
+line vty 5 15
+ password cisco
+ login
+ transport input telnet
+!
+!
+end
