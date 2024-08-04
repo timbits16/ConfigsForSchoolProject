@@ -20,8 +20,7 @@ ipv6 cef
 multilink bundle-name authenticated
 
 redundancy
-no ip http server
-no ip http secure-server
+
 access-list 1 permit 10.150.0.0 0.0.127.255
 ip nat inside source list 1 interface GigabitEthernet0/3 overload
 
@@ -97,6 +96,9 @@ logging trap debugging
 logging trap informational
 
 ip route 0.0.0.0 0.0.0.0 192.168.255.1
+
+no ip http server
+no ip http secure-server
 
 ! ACL to prevent visitor networks from accessing data center
 ip access-list extended Visitor_DataCenter_Block
