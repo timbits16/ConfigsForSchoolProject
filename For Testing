@@ -92,8 +92,6 @@ logging 10.150.0.16
 logging trap debugging
 logging trap informational
 
-
-
 ! Disable HTTP server
 no ip http server
 no ip http secure-server
