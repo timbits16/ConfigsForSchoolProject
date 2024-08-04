@@ -22,8 +22,11 @@ multilink bundle-name authenticated
 
 redundancy
 
-access-list 1 permit 10.150.0.0 0.0.127.255
 ip nat inside source list 1 interface GigabitEthernet0/3 overload
+ip route 0.0.0.0 0.0.0.0 192.168.255.1
+
+access-list 1 permit 10.150.0.0 0.0.127.255
+access-list 1 deny any
 
 ! Interface configurations
 interface GigabitEthernet0/0
@@ -91,15 +94,13 @@ router ospf 15
  priority 127
  auto-cost reference-bandwidth 1000
  passive-interface GigabitEthernet0/3
- network 10.150.127.0 0.0.0.3 area 0
+ network 192.168.255.0 0.0.0.255 area 0
  default-information originate
 
 ! Logging configuration
 logging 10.150.0.16
 logging trap debugging
 logging trap informational
-
-ip route 0.0.0.0 0.0.0.0 192.168.255.1
 
 no ip http server
 no ip http secure-server
