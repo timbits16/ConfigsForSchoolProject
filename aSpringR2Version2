@@ -20,6 +20,8 @@ ipv6 cef
 multilink bundle-name authenticated
 
 redundancy
+access-list 1 permit 10.150.0.0 0.0.127.255
+ip nat inside source list 1 interface GigabitEthernet0/3 overload
 
 ! Interface configurations
 interface GigabitEthernet0/0
